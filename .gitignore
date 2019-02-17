@@ -7,6 +7,9 @@
 # Files for the ART/Dalvik VM
 *.dex
 
+# JSON Files
+*.json
+
 # Java class files
 *.class
 
