@@ -7,9 +7,22 @@
     android:background="@drawable/gradient_6"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/txtRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="566dp"
+        android:text="Registrarse"
+        android:textSize="18sp" />
+
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtUsr"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
@@ -26,7 +39,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/txtPasswd"
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
@@ -42,32 +55,40 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnIngresar"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="false"
-        android:layout_marginEnd="155dp"
-        android:layout_marginRight="155dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginEnd="157dp"
+        android:layout_marginRight="157dp"
+        android:layout_marginBottom="106dp"
         android:text="Ingresar" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="155dp"
+        android:layout_marginRight="155dp"
+        android:layout_marginBottom="166dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvOlvContr"
         android:layout_width="200dp"
         android:layout_height="20dp"
+        android:layout_alignParentLeft="false"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="83dp"
         android:layout_marginRight="83dp"
-        android:layout_marginBottom="97dp"
+        android:layout_marginBottom="79dp"
         android:text="¿Olvidó su contraseña?"
         android:textColor="#ffffff" />
 </RelativeLayout>
