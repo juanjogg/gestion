@@ -63,7 +63,7 @@
         android:layout_marginBottom="264dp"
         android:drawableLeft="@drawable/ic_action_name_usr"
         android:ems="10"
-        android:hint="Usuario"
+        android:hint="E - mail"
         android:inputType="textPersonName"
         android:textColor="#ffffff"
         android:textSize="25sp" />
