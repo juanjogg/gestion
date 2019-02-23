@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -14,21 +16,30 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private GoogleApiClient apiClient;
     private SignInButton signInBtn;
-    TextView registro;
-    TextView olvPsswd;
-
+    private TextView registro, olvPsswd;
+    private Button btnIngresar;
+    private FirebaseAuth mAuth;
+    private EditText etMail, etPassword;
     public static final int SIGN_IN_CODE = 777;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
+        etMail = findViewById(R.id.txtUsr);
+        etPassword = findViewById(R.id.txtPasswd);
 
-        registro = (TextView)findViewById(R.id.txtRegistro);
-
+        registro = findViewById(R.id.txtRegistro);
+        btnIngresar = findViewById(R.id.btnIngresar);
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
 
-        olvPsswd = (TextView)findViewById(R.id.tvOlvContr);
+        olvPsswd = findViewById(R.id.tvOlvContr);
 
         olvPsswd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +70,35 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 startActivityForResult(intent, SIGN_IN_CODE);
             }
         });
+
+        btnIngresar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInUser();
+            }
+        });
+    }
+
+    private void signInUser() {
+        try{
+            mAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Toast.makeText(MainActivity.this, "Te has logueado", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "Email o password erroneos", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+        catch (IllegalArgumentException e){
+            etMail.setError("Required!");
+            etPassword.setError("Required!");
+        }
+
     }
 
     @Override
