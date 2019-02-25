@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class RegistrarActivity extends AppCompatActivity {
     private Button btnEnviar;
     private FirebaseDatabase database;
     private DatabaseReference reference;
+    private TextView txtError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class RegistrarActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.txtContrasena);
         mAuth = FirebaseAuth.getInstance();
         btnEnviar = findViewById(R.id.btnEnviar);
-
+        txtError = findViewById(R.id.txtError);
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,23 +58,45 @@ public class RegistrarActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
     private void signUpUser() {
         try{
-            mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        //Ir a la pantalla principal
-                        Log.i("Info","TaskCompleted");
-                        registerUser(mAuth.getCurrentUser());
-                        //Toast.makeText(RegistrarActivity.this, "Completed!", Toast.LENGTH_SHORT);
+            if(OlvidarPsswdActivity.validateEmail(etEmail.getText().toString())){
+                mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            //Ir a la pantalla principal
+                            Log.i("Info","TaskCompleted");
+                            registerUser(mAuth.getCurrentUser());
 
+                            Toast.makeText(RegistrarActivity.this, "Completed!", Toast.LENGTH_SHORT);
+
+                        }
+                        else{
+                            Toast.makeText(RegistrarActivity.this, "Not completed!", Toast.LENGTH_SHORT);
+
+                            Log.e("Exception", task.getException().getMessage());
+                            setErrorText(task.getException());
+                        }
                     }
-                    else{
-                        Toast.makeText(RegistrarActivity.this, "Not completed!", Toast.LENGTH_SHORT);
-                    }
-                }
-            });
+                });
+            }
+            else {
+                txtError.setText("Wrong email address");
+                Log.e("MAIL_ERROR","Wrong email address");
+            }
+
         }
         catch (IllegalArgumentException e){
 
@@ -86,5 +110,9 @@ public class RegistrarActivity extends AppCompatActivity {
     private void registerUser(FirebaseUser user) {
         User userAdded = new User(etNombre.getText().toString(), etApellido.getText().toString(), etEmail.getText().toString());
         reference.child(user.getUid()).setValue(userAdded);
+    }
+
+    private void setErrorText(Exception e){
+        txtError.setText(e.getMessage());
     }
 }
