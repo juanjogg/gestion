@@ -81,18 +81,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void signInUser() {
         try{
-            mAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Toast.makeText(MainActivity.this, "Te has logueado", Toast.LENGTH_SHORT).show();
+            if (OlvidarPsswdActivity.validateEmail(etMail.getText().toString())) {
+                mAuth.signInWithEmailAndPassword(etMail.getText().toString(), etPassword.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(MainActivity.this, "Te has logueado", Toast.LENGTH_SHORT).show();
 
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Email o password erroneos", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else{
-                        Toast.makeText(MainActivity.this, "Email o password erroneos", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                });
+            }
+            else{
+                Toast.makeText(this, "Email incorrecto", Toast.LENGTH_SHORT).show();
+            }
+
         }
         catch (IllegalArgumentException e){
             etMail.setError("Required!");

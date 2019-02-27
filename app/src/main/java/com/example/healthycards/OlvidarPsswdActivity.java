@@ -57,6 +57,7 @@ public class OlvidarPsswdActivity extends AppCompatActivity {
             }
             else {
                 txtViewError.setText("Wrong email address");
+                Toast.makeText(this, "Email erroneo", Toast.LENGTH_SHORT).show();
             }
 
         }
