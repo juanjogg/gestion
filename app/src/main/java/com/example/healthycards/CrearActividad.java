@@ -5,17 +5,19 @@ import android.os.Bundle;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class CrearActividad extends AppCompatActivity {
 
@@ -37,14 +39,25 @@ public class CrearActividad extends AppCompatActivity {
         }
     }
 
+    Spinner comboDificultad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.crear_actividad);
 
+
+        comboDificultad = findViewById(R.id.spinDifiActividad);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.combo_dificultades, android.R.layout.simple_spinner_item);
+        comboDificultad.setAdapter(adapter);
+
+
         nombreAct = findViewById(R.id.txtnombreActividad);
         etDescripcion = findViewById(R.id.txtdescActividad);
-        etDificultad = findViewById(R.id.txtdifiActividad);
+
+        //OJO: Hacer casteo acá para poder leer el dato.
+        //etDificultad = findViewById(R.id.spinDifiActividad);
+
         etTiempo = findViewById(R.id.txttiempoActividad);
         btnEnviar = findViewById(R.id.btnCrearActividad);
         mAuth = FirebaseAuth.getInstance();
@@ -85,4 +98,6 @@ public class CrearActividad extends AppCompatActivity {
 
         }
     }
+
+
 }
