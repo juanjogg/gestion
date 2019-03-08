@@ -7,11 +7,12 @@ public class Actividad {
     private String dificultad;
     private int duracionMin;
 
-    public Actividad(String nombre, String descripcion, int duracionMin, String dificultad){
+    public Actividad(String nombre, String descripcion, int duracionMin, String dificultad, String uID){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.duracionMin = duracionMin;
         this.dificultad = dificultad;
+        this.uID = uID;
     }
 
     public String getDescripcion() {
