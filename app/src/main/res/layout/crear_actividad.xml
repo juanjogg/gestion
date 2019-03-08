@@ -15,9 +15,9 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="502dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginBottom="532dp"
         android:text="Crear actividad"
         android:textSize="50sp" />
 
@@ -30,45 +30,40 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="58dp"
         android:layout_marginRight="58dp"
-        android:layout_marginBottom="415dp"
+        android:layout_marginBottom="471dp"
         android:ems="10"
         android:hint="Nombre Actividad"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:textColor="#ffffff"
         android:textSize="25sp" />
 
     <EditText
         android:id="@+id/txtdescActividad"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="111dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="58dp"
         android:layout_marginRight="58dp"
-        android:layout_marginBottom="343dp"
+        android:layout_marginBottom="373dp"
         android:ems="10"
         android:hint="Descripción Actividad"
         android:inputType="textPersonName"
         android:textColor="#ffffff"
         android:textSize="25sp" />
 
-
-    <EditText
-        android:id="@+id/txtdifiActividad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/spinDifiActividad"
+        android:layout_width="305dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="58dp"
-        android:layout_marginRight="58dp"
-        android:layout_marginBottom="273dp"
-        android:ems="10"
-        android:hint="Dificultad Actividad"
-        android:inputType="textPersonName"
-        android:textColor="#ffffff"
-        android:textSize="25sp" />
+        android:layout_marginEnd="57dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginBottom="324dp" />
+
 
     <EditText
         android:id="@+id/txttiempoActividad"
@@ -77,14 +72,26 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="61dp"
-        android:layout_marginRight="61dp"
-        android:layout_marginBottom="205dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="265dp"
         android:ems="10"
         android:hint="Tiempo Actividad"
         android:inputType="textPersonName"
         android:textColor="#ffffff"
         android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btnImagenActividad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="131dp"
+        android:layout_marginRight="131dp"
+        android:layout_marginBottom="200dp"
+        android:text="Imagen Actividad" />
 
     <Button
         android:id="@+id/btnCrearActividad"
@@ -97,6 +104,7 @@
         android:layout_marginRight="153dp"
         android:layout_marginBottom="107dp"
         android:text="Crear" />
+
 
 </RelativeLayout>
 
