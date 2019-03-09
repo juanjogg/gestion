@@ -1,11 +1,14 @@
 package com.example.healthycards;
 
+
+
 public class Actividad {
     private String uID;
     private String descripcion;
     private String nombre;
     private String dificultad;
     private int duracionMin;
+    private String imgUri;
 
     public Actividad(String nombre, String descripcion, int duracionMin, String dificultad, String uID){
         this.nombre = nombre;
@@ -13,10 +16,20 @@ public class Actividad {
         this.duracionMin = duracionMin;
         this.dificultad = dificultad;
         this.uID = uID;
-    }
+
+}
+
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public String getImgUri() {
+        return imgUri;
+    }
+
+    public void setImgUri(String imgUri) {
+        this.imgUri = imgUri;
     }
 
     public void setDescripcion(String descripcion) {
