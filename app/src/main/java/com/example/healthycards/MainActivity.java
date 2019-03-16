@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(MainActivity.this, "Te has logueado", Toast.LENGTH_SHORT).show();
-                            Intent toMainList = new Intent(MainActivity.this, CrearActividad.class);
+                            Intent toMainList = new Intent(MainActivity.this, ListaActividades.class);
                             startActivity(toMainList);
                             finish();
                         }
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             Toast.makeText(this, "Te has logueado con Google!", Toast.LENGTH_SHORT).show();
-            Intent toMainList = new Intent(MainActivity.this, CrearActividad.class);
+            Intent toMainList = new Intent(MainActivity.this, ListaActividades.class);
             startActivity(toMainList);
             finish();
         }

@@ -17,8 +17,11 @@ public class Actividad {
         this.dificultad = dificultad;
         this.uID = uID;
 
-}
+    }
 
+    public Actividad() {
+
+    }
 
     public String getDescripcion() {
         return descripcion;
