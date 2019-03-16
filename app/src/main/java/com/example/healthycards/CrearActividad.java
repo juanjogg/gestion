@@ -68,8 +68,6 @@ public class CrearActividad extends AppCompatActivity {
         nombreAct = findViewById(R.id.txtnombreActividad);
         etDescripcion = findViewById(R.id.txtdescActividad);
 
-        //OJO: Hacer casteo acá para poder leer el dato.
-        //etDificultad = findViewById(R.id.spinDifiActividad);
 
         etTiempo = findViewById(R.id.txttiempoActividad);
         btnEnviar = findViewById(R.id.btnCrearActividad);
@@ -120,10 +118,7 @@ public class CrearActividad extends AppCompatActivity {
                         etDescripcion.getText().clear();
                         etTiempo.getText().clear();
                         comboDificultad.setSelection(0);
-                        /*if(imgUri != null){
-                            uploadImage(imgUri);
-                        }
-                        */
+
 
                     }
                     else{
@@ -151,6 +146,7 @@ public class CrearActividad extends AppCompatActivity {
                 Log.i("URI_DATA", uri.toString());
                 //uploadImage(uri);
                 imgUri = uri;
+                Toast.makeText(this, "Se cargó la imagen",Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -164,7 +160,7 @@ public class CrearActividad extends AppCompatActivity {
                 imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Toast.makeText(CrearActividad.this, uri.toString(), Toast.LENGTH_LONG).show();
+
                         imgUri = uri;
                         createActivity();
                     }
