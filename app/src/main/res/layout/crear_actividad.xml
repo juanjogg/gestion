@@ -67,17 +67,17 @@
 
     <EditText
         android:id="@+id/txttiempoActividad"
-        android:layout_width="wrap_content"
+        android:layout_width="201dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="60dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginRight="160dp"
         android:layout_marginBottom="265dp"
         android:ems="10"
         android:hint="Tiempo Actividad"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:textColor="#ffffff"
         android:textSize="25sp" />
 
@@ -104,6 +104,19 @@
         android:layout_marginRight="153dp"
         android:layout_marginBottom="107dp"
         android:text="Crear" />
+
+    <TextView
+        android:id="@+id/minutosTxtView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="66dp"
+        android:layout_marginRight="66dp"
+        android:layout_marginBottom="273dp"
+        android:text="@string/minutosTxtView"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>
