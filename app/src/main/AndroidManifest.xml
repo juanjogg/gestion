@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListaActividades"></activity>
-
+        <activity android:name=".CaracteristicaActividad"></activity>
     </application>
 
 
