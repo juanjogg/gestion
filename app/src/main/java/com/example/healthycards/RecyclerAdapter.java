@@ -1,6 +1,7 @@
 package com.example.healthycards;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -38,7 +39,8 @@ class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderLi
 
         }
         else{
-            holder.imageView.setImageDrawable(loadImageFromWeb(actividad.getImgUri()));
+            //holder.imageView.setImageDrawable(loadImageFromWeb(actividad.getImgUri()));
+            new DownloadImageTask(holder.imageView).execute(actividad.getImgUri());
         }
         holder.tiempoActividad.setText("Duración: "+actividades.get(position).getDuracionMin()+" minutos.");
         holder.nombreActividad.setText(actividades.get(position).getNombre());
@@ -73,20 +75,39 @@ class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderLi
         this.actividades = dataSet;
     }
 
-    public static Drawable loadImageFromWeb(String url){
-        try {
-            InputStream inputStream = (InputStream) new URL(url).getContent();
-            Drawable drawable = Drawable.createFromStream(inputStream, null);
-            return drawable;
-        } catch (IOException e) {
-            Log.e("ERROR", e.getMessage());
-            return null;
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
+        private ImageView imageView;
+
+        public DownloadImageTask(ImageView imageView){
+            this.imageView = imageView;
         }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+
+            String url = strings[0];
+            Bitmap mIcon = null;
+
+            try {
+                InputStream inputStream = new URL(url).openStream();
+                mIcon = BitmapFactory.decodeStream(inputStream);
+            } catch (IOException e) {
+                Log.e("ERROR", e.getMessage());
+
+            }
+
+            return mIcon;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            imageView.setImageBitmap(bitmap);
+        }
+
 
     }
 
-    //private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
-
-    //}
 
 }

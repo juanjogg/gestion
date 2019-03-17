@@ -1,6 +1,7 @@
 package com.example.healthycards;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -21,11 +22,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListaActividades extends AppCompatActivity {
-    private RecyclerView rvActividades;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    protected RecyclerView rvActividades;
+    protected RecyclerView.Adapter mAdapter;
+    protected RecyclerView.LayoutManager layoutManager;
     private ArrayList<Actividad> data;
     private Button bntCrearActividad;
     private FirebaseUser currentUser;
@@ -59,10 +61,12 @@ public class ListaActividades extends AppCompatActivity {
         rvActividades.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         rvActividades.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerAdapter(consultarActividades(data));
+        mAdapter = new RecyclerAdapter(data);
         rvActividades.setAdapter(mAdapter);
+        consultarActividades();
+
         mAuth = FirebaseAuth.getInstance();
-        
+
         bntCrearActividad = findViewById(R.id.btnCrearActividad);
 
         bntCrearActividad.setOnClickListener(new View.OnClickListener() {
@@ -75,22 +79,17 @@ public class ListaActividades extends AppCompatActivity {
 
     }
 
-    private ArrayList consultarActividades(final ArrayList datos) {
+    private void consultarActividades() {
         DatabaseReference db = reference.child("Activity");
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
-
-                for(DataSnapshot ds : dataSnapshots){
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                data.remove(data);
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Actividad actividad = ds.getValue(Actividad.class);
-                    datos.add(actividad);
+                    data.add(actividad);
 
                 }
                 mAdapter.notifyDataSetChanged();
@@ -102,7 +101,8 @@ public class ListaActividades extends AppCompatActivity {
 
             }
         });
-        return datos;
+
 
     }
+
 }
