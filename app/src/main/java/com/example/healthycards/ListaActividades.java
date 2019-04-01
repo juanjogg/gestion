@@ -79,6 +79,9 @@ public class ListaActividades extends AppCompatActivity {
 
     }
 
+    /**
+     * Se consultan las actividades en la BD para mostrarlas en la app.
+     */
     private void consultarActividades() {
         DatabaseReference db = reference.child("Activity");
 

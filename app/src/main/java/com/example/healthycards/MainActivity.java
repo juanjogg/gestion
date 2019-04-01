@@ -79,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
+    /**
+     * Se valida que los campos no estén vacios y se registra al usuario por medio de su correo y contraseña
+     */
     private void signInUser() {
         try{
             if (OlvidarPsswdActivity.validateEmail(etMail.getText().toString())) {
@@ -125,6 +128,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    /**
+     * Verifica si la conexión con los sevidores de google fue efectiva y se realiza el login al usuario
+     * @param result
+     */
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             Toast.makeText(this, "Te has logueado con Google!", Toast.LENGTH_SHORT).show();
