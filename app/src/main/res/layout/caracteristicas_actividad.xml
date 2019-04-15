@@ -98,4 +98,16 @@
         android:text="5:00"
         android:textSize="40sp" />
 
+    <ImageButton
+        android:id="@+id/btn_favoritos"
+        android:layout_width="103dp"
+        android:layout_height="102dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/favoritos" />
+
 </RelativeLayout>
