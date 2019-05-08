@@ -80,7 +80,7 @@ public class RegistrarActivity extends AppCompatActivity {
                             Log.i("Info","TaskCompleted");
                             registerUser(mAuth.getCurrentUser());
 
-                            Toast.makeText(RegistrarActivity.this, "Registracion completa", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrarActivity.this, "Registro completo", Toast.LENGTH_SHORT).show();
 
                         }
                         else{
