@@ -95,6 +95,9 @@ public class CrearActividad extends AppCompatActivity {
         });
     }
 
+    /**
+     * Se verifica que haya contenido en el campo y se guarda la actividad en la base de datos.
+     */
     private void createActivity() {
         if(nombreAct.getText().toString() == "" || etDescripcion.getText().toString() == "" || etTiempo.getText().toString() == ""){
             nombreAct.setError("Required");
@@ -130,6 +133,10 @@ public class CrearActividad extends AppCompatActivity {
         }
     }
 
+    /**
+     * Se invoca el explorador de android para elegir la imagen
+     */
+
     public void getFilePath(){
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -152,6 +159,10 @@ public class CrearActividad extends AppCompatActivity {
         }
     }
 
+    /**
+     * Se llama la funcion de google que nos permite subir la imagen al servidor
+     * @param uri Path de la imagen en el telefono
+     */
     private void uploadImage(Uri uri) {
         final StorageReference imgRef = storageReference.child("images/"+ uri.toString());
         imgRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

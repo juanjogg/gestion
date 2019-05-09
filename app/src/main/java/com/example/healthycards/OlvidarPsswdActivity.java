@@ -40,6 +40,9 @@ public class OlvidarPsswdActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Se envía un correo para el cambio de contraseña.
+     */
     private void sendPasswordReset(){
         try{
             if(validateEmail(etEmail.getText().toString())){
@@ -66,6 +69,12 @@ public class OlvidarPsswdActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * Verifica si se ingresó una dirección de correo electrónico válida
+     * @param email
+     * @return
+     */
     public static boolean validateEmail(String email){
         Matcher matcher = EMAIL_REGEX.matcher(email);
         return matcher.find();

@@ -16,7 +16,7 @@ public class Actividad {
         this.duracionMin = duracionMin;
         this.dificultad = dificultad;
         this.uID = uID;
-
+        this.imgUri = "";
     }
 
     public Actividad() {

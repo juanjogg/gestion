@@ -1,5 +1,6 @@
 package com.example.healthycards;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegistrarActivity extends AppCompatActivity {
 
@@ -43,12 +47,22 @@ public class RegistrarActivity extends AppCompatActivity {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etNombre.getText().toString().equals("") || etApellido.getText().equals("")){
+                if(etNombre.getText().toString().equals("") || etApellido.getText().equals("") || etPassword.toString().equals("") || etEmail.getText().toString().equals("")){
                     etEmail.setError("Required!");
                     etNombre.setError("Required!");
 
                     etApellido.setError("Required!");
-                    etPassword.setError("Required!");
+                    etPassword.setError("Debe tener entre 6 y 25 caracteres");
+                }
+                else if(etNombre.getText().toString().length() >= 25 || etPassword.getText().toString().length() > 25 || etPassword.getText().toString().length() < 6 || etApellido.getText().toString().length() > 25){
+                    etNombre.setError("Debe tener maximo 25 caracteres");
+                    etApellido.setError("Debe tener maximo 25 caracteres");
+                    etPassword.setError("Debe estar entre 6 y 25 caracteres");
+
+                }
+                else if(getSpecialCharacter(etNombre.getText().toString()) || getSpecialCharacter(etApellido.getText().toString())){
+                    etNombre.setError("No debe contener caracteres especiales");
+                    etApellido.setError("No debe contener caracteres especiales");
                 }
                 else {
                     signUpUser();
@@ -81,6 +95,10 @@ public class RegistrarActivity extends AppCompatActivity {
                             registerUser(mAuth.getCurrentUser());
 
                             Toast.makeText(RegistrarActivity.this, "Registro completo", Toast.LENGTH_SHORT).show();
+                            Intent toList = new Intent(RegistrarActivity.this, ListaActividades.class);
+                            startActivity(toList);
+                            finish();
+
 
                         }
                         else{
@@ -93,7 +111,7 @@ public class RegistrarActivity extends AppCompatActivity {
                 });
             }
             else {
-                txtError.setText("Wrong email address");
+                Toast.makeText(this, "Wrong email address", Toast.LENGTH_LONG).show();
                 Log.e("MAIL_ERROR","Wrong email address");
             }
 
@@ -110,6 +128,12 @@ public class RegistrarActivity extends AppCompatActivity {
     private void registerUser(FirebaseUser user) {
         User userAdded = new User(etNombre.getText().toString(), etApellido.getText().toString(), etEmail.getText().toString());
         reference.child(user.getUid()).setValue(userAdded);
+    }
+
+    private boolean getSpecialCharacter(String text){
+        Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
     }
 
     private void setErrorText(Exception e){

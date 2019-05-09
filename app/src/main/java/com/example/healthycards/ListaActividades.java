@@ -29,7 +29,7 @@ public class ListaActividades extends AppCompatActivity {
     protected RecyclerView.Adapter mAdapter;
     protected RecyclerView.LayoutManager layoutManager;
     private ArrayList<Actividad> data;
-    private Button bntCrearActividad;
+    private Button bntCrearActividad, btnSignOut;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
@@ -44,6 +44,7 @@ public class ListaActividades extends AppCompatActivity {
             startActivity(toLogin);
             finish();
         }
+        Toast.makeText(this, "Bienvenido! " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -68,7 +69,7 @@ public class ListaActividades extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         bntCrearActividad = findViewById(R.id.btnCrearActividad);
-
+        btnSignOut = findViewById(R.id.btnSignOut);
         bntCrearActividad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,9 +77,24 @@ public class ListaActividades extends AppCompatActivity {
                 startActivity(toCrearActividad);
             }
         });
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOutUser();
+            }
+        });
 
     }
 
+    private void signOutUser() {
+        mAuth.signOut();
+        Intent toMainScreen = new Intent(this, MainActivity.class);
+        startActivity(toMainScreen);
+    }
+
+    /**
+     * Se consultan las actividades en la BD para mostrarlas en la app.
+     */
     private void consultarActividades() {
         DatabaseReference db = reference.child("Activity");
 
