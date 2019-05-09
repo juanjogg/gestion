@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">HealthyCards</string>
-    <string name="Registrarse">regustarse</string>
+    <string name="Registrarse">Registrarse</string>
     <string name="crear_actividad">Crear Actividad</string>
     <string name="minutosTxtView">Minutos</string>
+    <string name="signOut">Cerrar sesion</string>
 </resources>

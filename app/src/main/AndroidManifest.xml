@@ -10,20 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OlvidarPsswdActivity"></activity>
-        <activity android:name=".CrearActividad"></activity>
-        <activity android:name=".RegistrarActivity" >
+        <activity android:name=".OlvidarPsswdActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".CrearActividad" android:screenOrientation="portrait"></activity>
+        <activity android:name=".RegistrarActivity" android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaActividades"></activity>
-        <activity android:name=".CaracteristicaActividad"></activity>
+        <activity android:name=".ListaActividades" android:screenOrientation="portrait"></activity>
+        <activity android:name=".CaracteristicaActividad" android:screenOrientation="portrait"></activity>
     </application>
 
 
