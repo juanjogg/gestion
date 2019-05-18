@@ -29,7 +29,8 @@ public class ListaActividades extends AppCompatActivity {
     protected RecyclerView.Adapter mAdapter;
     protected RecyclerView.LayoutManager layoutManager;
     private ArrayList<Actividad> data;
-    private Button bntCrearActividad, btnSignOut;
+    private ArrayList<String> userFavorites;
+    private Button bntCrearActividad, btnSignOut, btnVerFavoritos;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
@@ -37,15 +38,16 @@ public class ListaActividades extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        currentUser = mAuth.getCurrentUser();
+        //currentUser = mAuth.getCurrentUser();
         if(currentUser == null){
             Intent toLogin = new Intent(ListaActividades.this, MainActivity.class);
             Toast.makeText(this, "Debe autenticarse", Toast.LENGTH_SHORT);
             startActivity(toLogin);
             finish();
         }
-        Toast.makeText(this, "Bienvenido! " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_LONG).show();
+
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +58,20 @@ public class ListaActividades extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         data = new ArrayList<>();
-
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference();
+        userFavorites = getUserFavorites();
         rvActividades = findViewById(R.id.recyclerActividades);
         rvActividades.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         rvActividades.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerAdapter(data);
+        mAdapter = new RecyclerAdapter(data,userFavorites);
         rvActividades.setAdapter(mAdapter);
         consultarActividades();
 
-        mAuth = FirebaseAuth.getInstance();
 
+        btnVerFavoritos = findViewById(R.id.btnVerFavoritos);
         bntCrearActividad = findViewById(R.id.btnCrearActividad);
         btnSignOut = findViewById(R.id.btnSignOut);
         bntCrearActividad.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +85,15 @@ public class ListaActividades extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signOutUser();
+            }
+        });
+
+        btnVerFavoritos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toFavList = new Intent(ListaActividades.this, ListaFavoritosActivity.class);
+                toFavList.putStringArrayListExtra("userFavorites",userFavorites);
+                startActivity(toFavList);
             }
         });
 
@@ -105,6 +118,7 @@ public class ListaActividades extends AppCompatActivity {
                 data.remove(data);
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     Actividad actividad = ds.getValue(Actividad.class);
+                    actividad.setActID(ds.getKey());
                     data.add(actividad);
 
                 }
@@ -119,6 +133,27 @@ public class ListaActividades extends AppCompatActivity {
         });
 
 
+    }
+
+    private ArrayList<String> getUserFavorites(){
+        DatabaseReference favsRef = reference.child("Users").child(currentUser.getUid()).child("Favorites");
+        final ArrayList<String> favString = new ArrayList<>();
+        favsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                favString.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+
+                    favString.add(ds.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return favString;
     }
 
 }
