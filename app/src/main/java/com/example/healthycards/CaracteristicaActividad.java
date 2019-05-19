@@ -1,10 +1,12 @@
 package com.example.healthycards;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,11 +27,16 @@ import java.util.Map;
 public class CaracteristicaActividad extends AppCompatActivity {
     private ImageView imgActividad;
     private ImageButton btnAddFav;
-    private TextView descripcionAct, duracionAct, dificultadAct, nombreAct;
+    private TextView descripcionAct, duracionAct, dificultadAct, nombreAct, tiempo;
     private DatabaseReference rootReference;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private ArrayList<String> userFavorites;
+    private Button btnTiempo;
+    private CountDownTimer countDownTimer;
+    private long tiempoEnMilisegundos = 300000; //5 minutos
+    private boolean tiempoCorriendo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,17 @@ public class CaracteristicaActividad extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         userFavorites = extra.getStringArrayList("UserFavorites");
+        tiempo = findViewById(R.id.lbl_Cronometro);
+        btnTiempo = findViewById(R.id.btn_comenzar);
+
+        btnTiempo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                empezarParar();
+            }
+        });
+
+        actualizarTiempo();
 
         if(extra.getString("ActivityImage") == ""){
             imgActividad.setImageResource(R.drawable.defaultimage);
@@ -73,6 +91,53 @@ public class CaracteristicaActividad extends AppCompatActivity {
         });
 
 
+    }
+
+    public void empezarParar(){
+        if(tiempoCorriendo){
+            pararTiempo();
+        } else{
+            empezarTiempo();
+        }
+    }
+
+    public void empezarTiempo(){
+        countDownTimer = new CountDownTimer(tiempoEnMilisegundos, 1000) {
+            @Override
+            public void onTick(long l) {
+                tiempoEnMilisegundos = l;
+                actualizarTiempo();
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+        btnTiempo.setText("Pausar");
+
+        tiempoCorriendo = true;
+    }
+
+    public void pararTiempo(){
+        countDownTimer.cancel();
+        btnTiempo.setText("Comenzar");
+        tiempoCorriendo = false;
+    }
+
+    public void actualizarTiempo(){
+        int minutos = (int) tiempoEnMilisegundos / 60000;
+        int segundos = (int) tiempoEnMilisegundos % 60000 / 1000;
+
+        String textoTiempo;
+        textoTiempo = "" + minutos;
+        textoTiempo += ":";
+
+        if(segundos < 10)
+            textoTiempo += "0";
+        textoTiempo += segundos;
+
+        tiempo.setText(textoTiempo);
     }
 
     private void deleteFavorite(String actID) {

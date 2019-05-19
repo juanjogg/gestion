@@ -35,7 +35,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".CaracteristicaActividad"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
     </application>
 
 </manifest>
