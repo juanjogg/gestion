@@ -1,10 +1,13 @@
 package com.example.healthycards;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +26,7 @@ import java.util.ArrayList;
 
 class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderList>{
     private ArrayList<Actividad> actividades;
+    private ArrayList<String> userFavorites;
     @NonNull
     @Override
     public ViewHolderList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,7 +37,7 @@ class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderLi
 
     @Override
     public void onBindViewHolder(ViewHolderList holder, int position) {
-        Actividad actividad = actividades.get(position);
+        final Actividad actividad = actividades.get(position);
         if(actividad.getImgUri() == null){
             holder.imageView.setImageResource(R.drawable.defaultimage);
 
@@ -48,6 +52,22 @@ class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderLi
             @Override
             public void onClick(View v) {
                 Log.i("CLICK","Clickaron un cardView");
+                Intent toCaracteristica = new Intent(v.getContext(),CaracteristicaActividad.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("ActivityName", actividad.getNombre());
+                bundle.putString("CreatorID", actividad.getuID());
+                bundle.putString("ActivityID", actividad.getActID());
+                bundle.putString("ActivityDescription", actividad.getDescripcion());
+                bundle.putString("ActivityLevel", actividad.getDificultad());
+                bundle.putInt("ActiviyDuration", actividad.getDuracionMin());
+                bundle.putString("ActivityImage", actividad.getImgUri());
+                bundle.putStringArrayList("UserFavorites", userFavorites);
+
+                toCaracteristica.putExtras(bundle);
+
+
+                v.getContext().startActivity(toCaracteristica);
             }
         });
     }
@@ -71,12 +91,18 @@ class RecyclerAdapter extends RecyclerView.Adapter <RecyclerAdapter.ViewHolderLi
         }
     }
 
+    public RecyclerAdapter(ArrayList<Actividad> dataSet, ArrayList<String> usrFav){
+        this.actividades = dataSet;
+        this.userFavorites = usrFav;
+
+    }
     public RecyclerAdapter(ArrayList<Actividad> dataSet){
         this.actividades = dataSet;
+
+
     }
 
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
+    protected static class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
         private ImageView imageView;
 
         public DownloadImageTask(ImageView imageView){

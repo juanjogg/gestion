@@ -9,6 +9,7 @@ public class Actividad {
     private String dificultad;
     private int duracionMin;
     private String imgUri;
+    private String actID;
 
     public Actividad(String nombre, String descripcion, int duracionMin, String dificultad, String uID){
         this.nombre = nombre;
@@ -16,7 +17,7 @@ public class Actividad {
         this.duracionMin = duracionMin;
         this.dificultad = dificultad;
         this.uID = uID;
-
+        this.imgUri = "";
     }
 
     public Actividad() {
@@ -65,6 +66,14 @@ public class Actividad {
 
     public String getuID() {
         return uID;
+    }
+
+    public String getActID() {
+        return actID;
+    }
+
+    public void setActID(String actID) {
+        this.actID = actID;
     }
 }
 
