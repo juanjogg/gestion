@@ -34,7 +34,8 @@ public class CaracteristicaActividad extends AppCompatActivity {
     private ArrayList<String> userFavorites;
     private Button btnTiempo;
     private CountDownTimer countDownTimer;
-    private long tiempoEnMilisegundos = 300000; //5 minutos
+    private static final int MILIS = 60000;
+    private long tiempoEnMilisegundos;
     private boolean tiempoCorriendo;
 
 
@@ -51,7 +52,9 @@ public class CaracteristicaActividad extends AppCompatActivity {
         nombreAct = findViewById(R.id.lbl_nombreActividad);
         imgActividad = findViewById(R.id.img_actividad);
         descripcionAct.setText(extra.getString("ActivityDescription"));
-        duracionAct.setText(extra.getInt("ActivityDuration")+"");
+        duracionAct.setText(extra.getInt("ActiviyDuration")+"");
+        Log.i("DURACION",extra.getInt("ActiviyDuration") + "");
+        tiempoEnMilisegundos = MILIS * extra.getInt("ActiviyDuration");
         dificultadAct.setText(extra.getString("ActivityLevel"));
         nombreAct.setText(extra.getString("ActivityName"));
         rootReference = FirebaseDatabase.getInstance().getReference();
